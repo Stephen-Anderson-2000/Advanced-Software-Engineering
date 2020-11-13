@@ -4,4 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        ../../BinaryTrees/bst.cpp \
         main.cpp
+
+HEADERS += \
+    ../../BinaryTrees/bst.h

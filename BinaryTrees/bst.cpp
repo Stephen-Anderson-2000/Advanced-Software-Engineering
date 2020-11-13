@@ -9,7 +9,19 @@ struct BST::Node
     BST::ItemType item;
     Node* leftChild;
     Node* rightChild;
+    int balanceFactor;
 }; // A struct to store the key, item and the pointers to the next nodes
+
+BST::Node::Node(KeyType key, ItemType item)
+{
+    this->key = key;
+    this->item = item;
+    // Errors can occur if the children are not explicitly set as leaves when initialised
+    this->leftChild = BST::leaf();
+    this->rightChild = BST::leaf();
+    // Initialises the balance factor that is used for AVL balancing
+    this->balanceFactor = 0;
+} // Sets up the Node type and makes sure that the children are nullptrs
 
 BST::BST(const BST & originalTree)
 {
@@ -57,15 +69,6 @@ bool BST::isLeaf(Node* n)
     return (n == nullptr);
 } // Returns true if the node is a nullptr
 
-BST::Node::Node(KeyType key, ItemType item)
-{
-    this->key = key;
-    this->item = item;
-    // Errors can occur if the children are not explicitly set as leaves when initialised
-    this->leftChild = BST::leaf();
-    this->rightChild = BST::leaf();
-} // Sets up the Node type and makes sure that the children are nullptrs
-
 BST::ItemType* BST::lookup(KeyType soughtKey)
 {
     return lookupRec(soughtKey, this->root);
@@ -112,12 +115,55 @@ void BST::insertRec(KeyType newKey, ItemType newItem, Node* &currentNode)
     else if (newKey < currentNode->key)
     {
         insertRec(newKey, newItem, currentNode->leftChild);
+        currentNode->balanceFactor = calcBalanceFactor(currentNode->leftChild, currentNode->rightChild);
     }
     else if (newKey > currentNode->key)
     {
         insertRec(newKey, newItem, currentNode->rightChild);
+        currentNode->balanceFactor = calcBalanceFactor(currentNode->leftChild, currentNode->rightChild);
     }
 } // Recursively iterates until it reaches the correct insertion point
+
+int BST::calcBalanceFactor(Node* &leftChild, Node* &rightChild)
+{
+    if (!isLeaf(leftChild) && !isLeaf(rightChild))
+    {
+        int rightHeight, leftHeight = 0;
+        findBranchHeight(rightChild, rightHeight);
+        findBranchHeight(leftChild, leftHeight);
+        return (rightHeight - leftHeight);
+    }
+    else if (!isLeaf(leftChild))
+    {
+        return (leftChild->balanceFactor - 1);
+    }
+    else if (!isLeaf(rightChild))
+    {
+        return (rightChild->balanceFactor + 1);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
+// Look for alternative solution
+int BST::findBranchHeight(Node* &currentNode, int &maxLevel, int level)
+{
+    if (!isLeaf(currentNode))
+    {
+        findBranchHeight(currentNode->leftChild, maxLevel, ++level);
+
+        if (level > maxLevel)
+        {
+            maxLevel = level;
+        }
+
+        findBranchHeight(currentNode->rightChild, maxLevel, level);
+    }
+    return maxLevel;
+}
 
 void BST::remove(KeyType soughtKey)
 {
@@ -216,7 +262,9 @@ void BST::inOrderTraversal(Node * & currentNode)
             inOrderTraversal(currentNode->leftChild);
         }
 
-        std::cout << currentNode->key << '\t' << currentNode->item << std::endl;
+        int height = 0;
+        height = findBranchHeight(currentNode, height);
+        std::cout << currentNode->key << '\t' << currentNode->item << '\t' << height << std::endl;
 
         // Traverses the right branch
         if (!isLeaf(currentNode->rightChild))
@@ -242,7 +290,7 @@ void BST::preOrderDisplay(Node * &currentNode, std::string whiteSpace)
 {
     // 'whiteSpace' is used to help with the display formatting
 
-    std::cout << whiteSpace << currentNode->key << std::endl;
+    std::cout << whiteSpace << currentNode->key << ' ' << currentNode->balanceFactor << std::endl;
 
     // Effectively increments the whitespace
     whiteSpace += "\t";
@@ -287,6 +335,7 @@ BST::Node* BST::deepCopy(Node * originalNode)
         Node* newNode = new Node(originalNode->key, originalNode->item);
         newNode->leftChild = deepCopy(originalNode->leftChild);
         newNode->rightChild = deepCopy(originalNode->rightChild);
+        newNode->balanceFactor = originalNode->balanceFactor;
         return newNode;
     }
     return originalNode;
@@ -312,6 +361,9 @@ void BST::rotateRight(Node* & localRoot)
     assert(!isLeaf(newRoot));
     Node* newChild = newRoot->rightChild;
 
+    oldRoot->balanceFactor = oldRoot->balanceFactor + 1 + std::max(-(newRoot->balanceFactor), 0);
+    newRoot->balanceFactor = newRoot->balanceFactor + 1 + std::max(oldRoot->balanceFactor, 0);
+
     localRoot = newRoot;
     oldRoot->leftChild = newChild;
     newRoot->rightChild = oldRoot;
@@ -325,7 +377,16 @@ void BST::rotateLeft(Node* & localRoot)
     assert(!isLeaf(newRoot));
     Node* newChild = newRoot->leftChild;
 
+    oldRoot->balanceFactor = oldRoot->balanceFactor - 1 - std::max(newRoot->balanceFactor, 0);
+    newRoot->balanceFactor = newRoot->balanceFactor - 1 - std::max(oldRoot->balanceFactor, 0);
+
     localRoot = newRoot;
     oldRoot->rightChild = newChild;
     newRoot->leftChild = oldRoot;
+}
+
+bool BST::rebalance(Node* &localRoot)
+{
+    return false;
+    // returns true if sub-tree height decreased
 }
