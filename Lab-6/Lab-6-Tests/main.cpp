@@ -7,14 +7,16 @@ int main()
 {
   Dict dict;
 
+  /*
   dict.insert(2, "Root");
   dict.insert(1, "Left 1");
   dict.insert(3, "Right 1");
   dict.insert(4, "Right 2");
   dict.insert(5, "Right 3");
   dict.insert(0, "Left 2");
+  */
 
-  /*
+
   dict.insert(22,"Jane");
   dict.insert(22,"Mary");
   dict.insert(0,"Harold");
@@ -31,7 +33,6 @@ int main()
   dict.insert(23,"Elizabeth");
   dict.insert(1,"William");
   dict.insert(26,"Charles");
-  */
 
   dict.displayEntries();
 

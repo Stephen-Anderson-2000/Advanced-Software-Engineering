@@ -28,7 +28,7 @@ private:
     static bool isLeaf(Node*);
     ItemType* lookupRec(KeyType, Node*);
     int calcBalanceFactor(Node* &, Node* &);
-    int findBranchHeight(Node* &, int &, int = 0);
+    int findBranchHeight(Node* &, int = 0, int = 0);
     void insertRec(KeyType, ItemType, Node* &);
     void inOrderTraversal(Node* &);
     void preOrderDisplay(Node* &, std::string);

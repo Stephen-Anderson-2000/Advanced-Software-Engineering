@@ -128,10 +128,7 @@ int BST::calcBalanceFactor(Node* &leftChild, Node* &rightChild)
 {
     if (!isLeaf(leftChild) && !isLeaf(rightChild))
     {
-        int rightHeight = 0, leftHeight = 0;
-        findBranchHeight(rightChild, rightHeight);
-        findBranchHeight(leftChild, leftHeight);
-        return (rightHeight - leftHeight);
+        return (findBranchHeight(rightChild) - findBranchHeight(leftChild));
     }
     else if (!isLeaf(leftChild))
     {
@@ -147,20 +144,18 @@ int BST::calcBalanceFactor(Node* &leftChild, Node* &rightChild)
     }
 }
 
-
-// Look for alternative solution
-int BST::findBranchHeight(Node* &currentNode, int &maxLevel, int level)
+int BST::findBranchHeight(Node* &currentNode, int maxLevel, int level)
 {
     if (!isLeaf(currentNode))
     {
-        findBranchHeight(currentNode->leftChild, maxLevel, ++level);
+        maxLevel = findBranchHeight(currentNode->leftChild, maxLevel, ++level);
 
         if (level > maxLevel)
         {
             maxLevel = level;
         }
 
-        findBranchHeight(currentNode->rightChild, maxLevel, level);
+        maxLevel = findBranchHeight(currentNode->rightChild, maxLevel, level);
     }
     return maxLevel;
 }
@@ -262,9 +257,7 @@ void BST::inOrderTraversal(Node * & currentNode)
             inOrderTraversal(currentNode->leftChild);
         }
 
-        int height = 0;
-        height = findBranchHeight(currentNode, height);
-        std::cout << currentNode->key << '\t' << currentNode->item << '\t' << height << std::endl;
+        std::cout << currentNode->key << '\t' << currentNode->item << ": " << currentNode->balanceFactor << std::endl;
 
         // Traverses the right branch
         if (!isLeaf(currentNode->rightChild))
@@ -290,7 +283,7 @@ void BST::preOrderDisplay(Node * &currentNode, std::string whiteSpace)
 {
     // 'whiteSpace' is used to help with the display formatting
 
-    std::cout << whiteSpace << currentNode->key << ' ' << currentNode->balanceFactor << std::endl;
+    std::cout << whiteSpace << currentNode->key << ": " << currentNode->balanceFactor << std::endl;
 
     // Effectively increments the whitespace
     whiteSpace += "\t";
