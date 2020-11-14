@@ -128,7 +128,7 @@ int BST::calcBalanceFactor(Node* &leftChild, Node* &rightChild)
 {
     if (!isLeaf(leftChild) && !isLeaf(rightChild))
     {
-        int rightHeight, leftHeight = 0;
+        int rightHeight = 0, leftHeight = 0;
         findBranchHeight(rightChild, rightHeight);
         findBranchHeight(leftChild, leftHeight);
         return (rightHeight - leftHeight);
