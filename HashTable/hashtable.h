@@ -1,7 +1,8 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-#include <string>
+//#include "singlylinkedlist.h"
+#include <vector>
 
 template<typename K, typename I>
 class HashTable
@@ -12,20 +13,33 @@ public:
     using KeyType = K;
     using ItemType = I;
 
-    HashTable();
+    HashTable(unsigned int size = 100);
+
+    int getTableLength() { return buckets.size(); }
 
     void insert(KeyType, ItemType);
     ItemType* lookup(KeyType);
     void remove(KeyType);
 
 private:
+    struct Bucket;
+    std::vector<Bucket> buckets;
     unsigned int hash(KeyType); // Only hashes the key from a string to integer, does not calculate the array index
 };
 
 template<typename K, typename I>
-HashTable<K, I>::HashTable()
+struct HashTable<K, I>::Bucket
 {
-    // constructor stub
+    Bucket(K, I);
+    K key;
+    I item;
+    //SinglyLinkedList<K, I>* entryList = new SinglyLinkedList<K, I>;
+}; // A struct to store a key, item pair
+
+template<typename K, typename I>
+HashTable<K, I>::HashTable(unsigned int size)
+{
+    buckets.resize(size);
 }
 
 template<typename K, typename I>

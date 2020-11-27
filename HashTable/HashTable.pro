@@ -7,6 +7,7 @@ SOURCES += \
     hashtable-tests.cpp
 
 HEADERS += \
-    hashtable.h
+    hashtable.h \
+    singlylinkedlist.h
 
 LIBS += -lboost_unit_test_framework

@@ -44,9 +44,9 @@ private:
 template<typename K, typename I>
 struct BST<K, I>::Node
 {
-    Node(KeyType, ItemType);
-    BST::KeyType key;
-    BST::ItemType item;
+    Node(K, I);
+    K key;
+    I item;
     Node* leftChild;
     Node* rightChild;
 }; // A struct to store the key, item and the pointers to the next nodes

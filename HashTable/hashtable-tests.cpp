@@ -9,7 +9,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "hashtable.h".h"
+#include "hashtable.h"
 
 using Dict     = HashTable<int, std::string>;
 using KeyType  = Dict::KeyType;
@@ -62,8 +62,20 @@ BOOST_AUTO_TEST_SUITE( Constructor_Tests )
 
 BOOST_AUTO_TEST_CASE( ConstructEmpty )
 {
-  new Dict();
-  // Use of 'new' is to avoid triggering the destructor in this test.
+    new Dict();
+    // Use of 'new' is to avoid triggering the destructor in this test.
+}
+
+BOOST_AUTO_TEST_CASE( ConstructSizeAbsent )
+{
+    Dict dict;
+    BOOST_CHECK(dict.getTableLength() == 100);
+}
+
+BOOST_AUTO_TEST_CASE( ConstructSizeGiven )
+{
+    Dict dict(50);
+    BOOST_CHECK(dict.getTableLength() == 50);
 }
 
 BOOST_AUTO_TEST_CASE( DestroyEmpty )
