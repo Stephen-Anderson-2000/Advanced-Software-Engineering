@@ -273,7 +273,6 @@ void BST::deepDelete(Node * current)
     if (!isLeaf(current))
     {
         deepDelete(current->leftChild);
-
         deepDelete(current->rightChild);
 
         delete(current);
