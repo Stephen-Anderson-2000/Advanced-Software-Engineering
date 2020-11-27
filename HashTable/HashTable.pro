@@ -4,8 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-    hashtable.cpp \
-    main.cpp
+    hashtable-tests.cpp
 
 HEADERS += \
     hashtable.h
+
+LIBS += -lboost_unit_test_framework
