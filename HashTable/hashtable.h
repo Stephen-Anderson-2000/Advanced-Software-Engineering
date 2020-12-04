@@ -31,7 +31,8 @@ private:
 template<typename K, typename I>
 struct HashTable<K, I>::Bucket
 {
-    //Bucket(K, I);
+    Bucket(K, I);
+
     K key;
     I item;
     //SinglyLinkedList<K, I>* entryList = new SinglyLinkedList<K, I>;
