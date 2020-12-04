@@ -93,7 +93,6 @@ nanoseconds timingTest_unordered_map(unsigned long long int mapSize, unsigned lo
    return meanTimePerLookup;
 }
 
-
 nanoseconds timingTest_bst(unsigned long long int mapSize, unsigned long long int numberOfLookups)
 {
    //KeyItemGenerator gen = KeyItemGenerator();
@@ -105,7 +104,7 @@ nanoseconds timingTest_bst(unsigned long long int mapSize, unsigned long long in
 
    for (unsigned long long int i = 0; i < mapSize; ++i)
    {
-       dict.insert(gen.randomKey(),gen.randomItem());
+       dict.insert(gen.randomKey(), gen.randomItem());
    }
 
    steady_clock::time_point startTime = steady_clock::now();
@@ -124,7 +123,35 @@ nanoseconds timingTest_bst(unsigned long long int mapSize, unsigned long long in
    return meanTimePerLookup;
 }
 
+nanoseconds timingTest_avl(unsigned long long int mapSize, unsigned long long int numberOfLookups)
+{
+   //KeyItemGenerator gen = KeyItemGenerator();
 
+   unsigned int seed = steady_clock::now().time_since_epoch().count();
+   KeyItemGenerator gen = KeyItemGenerator(seed);
+
+   BST<int, std::string> dict;
+
+   for (unsigned long long int i = 0; i < mapSize; ++i)
+   {
+       dict.insert(gen.randomKey(), gen.randomItem());
+   }
+
+   steady_clock::time_point startTime = steady_clock::now();
+
+   for (unsigned long long int i = 0; i < numberOfLookups; ++i)
+   {
+       dict.lookup(gen.randomKey());
+   }
+
+   steady_clock::time_point finishTime = steady_clock::now();
+
+   nanoseconds timeTaken = duration_cast<nanoseconds>(finishTime - startTime);
+
+   nanoseconds meanTimePerLookup = timeTaken / numberOfLookups;
+
+   return meanTimePerLookup;
+}
 
 void BenchmarkOrderedMap()
 {
@@ -173,11 +200,11 @@ void BenchmarkBST()
 
 void BenchmarkAVL()
 {
-    const unsigned long long int dictSize = 5000000;
+    const unsigned long long int dictSize = 5;
 
     const unsigned long long int numberOfLookups = 10000;
 
-    nanoseconds meanTimePerLookup = timingTest_unordered_map(dictSize, numberOfLookups);
+    nanoseconds meanTimePerLookup = timingTest_avl(dictSize, numberOfLookups);
 
     std::cout << "Data structure: BST"                                                          << std::endl;
     std::cout << "Dictionary size: " << dictSize << " random entries inserted."                 << std::endl;
