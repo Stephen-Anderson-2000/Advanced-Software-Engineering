@@ -66,15 +66,6 @@ nanoseconds timingTest_map(unsigned long long int mapSize, unsigned long long in
 nanoseconds timingTest_unordered_map(unsigned long long int mapSize, unsigned long long int numberOfLookups)
 {
    //KeyItemGenerator gen = KeyItemGenerator();
-   /*  If no seed value is given, each KeyItemGenerator object will
-    *  produce the same sequence of keys/items.
-    *  If we want different pseudo-random keys/items from each object
-    *  (and each program run), then we should provide a seed value.
-    *  For example:
-    *
-    *   unsigned int seed = steady_clock::now().time_since_epoch().count();
-    *   KeyItemGenerator gen = KeyItemGenerator(seed);
-   */
 
    unsigned int seed = steady_clock::now().time_since_epoch().count();
    KeyItemGenerator gen = KeyItemGenerator(seed);
@@ -105,15 +96,6 @@ nanoseconds timingTest_unordered_map(unsigned long long int mapSize, unsigned lo
 nanoseconds timingTest_bst(unsigned long long int mapSize, unsigned long long int numberOfLookups)
 {
    //KeyItemGenerator gen = KeyItemGenerator();
-   /*  If no seed value is given, each KeyItemGenerator object will
-    *  produce the same sequence of keys/items.
-    *  If we want different pseudo-random keys/items from each object
-    *  (and each program run), then we should provide a seed value.
-    *  For example:
-    *
-    *   unsigned int seed = steady_clock::now().time_since_epoch().count();
-    *   KeyItemGenerator gen = KeyItemGenerator(seed);
-   */
 
    unsigned int seed = steady_clock::now().time_since_epoch().count();
    KeyItemGenerator gen = KeyItemGenerator(seed);
@@ -161,11 +143,8 @@ void BenchmarkOrderedMap()
 
 void BenchmarkUnorderedMap()
 {
-    // This is the parameter we're measuring against.
-    // We're interested in how time performance scales against dictionary size.
     const unsigned long long int dictSize = 5000000;
 
-    // Adjust the number of lookups as needed to ensure that the tests run in a reasonable amount of time.
     const unsigned long long int numberOfLookups = 10000;
 
     nanoseconds meanTimePerLookup = timingTest_unordered_map(dictSize, numberOfLookups);
@@ -178,11 +157,8 @@ void BenchmarkUnorderedMap()
 
 void BenchmarkBST()
 {
-    // This is the parameter we're measuring against.
-    // We're interested in how time performance scales against dictionary size.
     const unsigned long long int dictSize = 5000000;
 
-    // Adjust the number of lookups as needed to ensure that the tests run in a reasonable amount of time.
     const unsigned long long int numberOfLookups = 10000;
 
     nanoseconds meanTimePerLookup = timingTest_unordered_map(dictSize, numberOfLookups);

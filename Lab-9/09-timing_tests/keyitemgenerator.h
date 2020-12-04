@@ -15,6 +15,7 @@ class KeyItemGenerator
     // Generates a random string consisting of a single uppercase Roman letter
     std::string randomItem();
 
+
   private:
     std::default_random_engine eng;
     std::uniform_int_distribution<int> intDist;
