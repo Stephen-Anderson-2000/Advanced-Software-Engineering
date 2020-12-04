@@ -93,6 +93,7 @@ nanoseconds timingTest_unordered_map(unsigned long long int mapSize, unsigned lo
    return meanTimePerLookup;
 }
 
+
 nanoseconds timingTest_bst(unsigned long long int mapSize, unsigned long long int numberOfLookups)
 {
    //KeyItemGenerator gen = KeyItemGenerator();
@@ -122,6 +123,7 @@ nanoseconds timingTest_bst(unsigned long long int mapSize, unsigned long long in
 
    return meanTimePerLookup;
 }
+
 
 
 void BenchmarkOrderedMap()
@@ -161,6 +163,20 @@ void BenchmarkBST()
 
     const unsigned long long int numberOfLookups = 10000;
 
+    nanoseconds meanTimePerLookup = timingTest_bst(dictSize, numberOfLookups);
+
+    std::cout << "Data structure: BST"                                                          << std::endl;
+    std::cout << "Dictionary size: " << dictSize << " random entries inserted."                 << std::endl;
+    std::cout << "Performing " << numberOfLookups << " random lookups."                         << std::endl;
+    std::cout << "Mean time taken per lookup: " << meanTimePerLookup.count() << " nanoseconds." << std::endl;
+}
+
+void BenchmarkAVL()
+{
+    const unsigned long long int dictSize = 5000000;
+
+    const unsigned long long int numberOfLookups = 10000;
+
     nanoseconds meanTimePerLookup = timingTest_unordered_map(dictSize, numberOfLookups);
 
     std::cout << "Data structure: BST"                                                          << std::endl;
@@ -177,6 +193,7 @@ int main()
     //BenchmarkUnorderedMap();
     //std::cout << '\n' << std::endl;
     BenchmarkBST();
+    //std::cout << '\n' << std::endl;
     return 0;
 }
 
