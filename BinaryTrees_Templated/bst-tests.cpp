@@ -11,7 +11,7 @@
 
 #include "bst.h"
 
-using Dict     = BST;
+using Dict     = BST_Templated<int, std::string>;
 using KeyType  = Dict::KeyType;
 using ItemType = Dict::ItemType;
 
@@ -140,6 +140,31 @@ BOOST_AUTO_TEST_CASE( MultipleInsertLookupAbsent )
   isAbsent(dict,-4);
   isAbsent(dict,56);
   isAbsent(dict,30);
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+////////////////////////////////////////////////////////////////////////////////
+
+BOOST_AUTO_TEST_SUITE( Template_Tests )
+
+BOOST_AUTO_TEST_CASE( String_Keys )
+{
+    BST_Templated<std::string, double> dict;
+
+    dict.insert("Mercury", 2439.7);
+    dict.insert("Venus", 6051.8);
+    dict.insert("Mars", 3389.5);
+    dict.insert("Pluto", 1188.3);
+
+    double* marsRadiusPtr = dict.lookup("Mars");
+    BOOST_REQUIRE(marsRadiusPtr != nullptr);
+    BOOST_CHECK_CLOSE(*marsRadiusPtr, 3390, 1);
+
+    BOOST_CHECK(dict.lookup("Minerva") == nullptr);
+
+    dict.remove("Pluto");
+    BOOST_CHECK(dict.lookup("Pluto") == nullptr);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

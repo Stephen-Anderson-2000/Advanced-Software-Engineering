@@ -4,8 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-    bst-tests.cpp \
-    bst.cpp
+    bst-tests.cpp
 
 HEADERS += \
     bst.h
