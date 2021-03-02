@@ -15,11 +15,13 @@ BST::BST(const BST & originalTree)
 {
     this->root = deepCopy(originalTree.root);
 }
+// See deepCopy for complexity
 
 BST::~BST()
 {
     deepDelete(root);
 }
+// See deepDelete for complexity
 
 BST & BST::operator=(const BST & original)
 {
@@ -30,12 +32,15 @@ BST & BST::operator=(const BST & original)
     this->root = deepCopy(original.root);
     return *this;
 }
+// Either deepDelete + deepCopy or just deepCopy
+// See both
 
 BST::BST(BST && originalTree)
 {
     this->root = originalTree.root;
     originalTree.root = leaf();
 }
+// Sets a pointer so always O(1)
 
 BST & BST::operator=(BST && originalTree)
 {
@@ -46,6 +51,7 @@ BST & BST::operator=(BST && originalTree)
     }
     return *this;
 }
+// Sets up to two pointers so always O(1)
 
 BST::Node* BST::leaf()
 {
@@ -70,6 +76,7 @@ BST::ItemType* BST::lookup(KeyType soughtKey)
 {
     return lookupRec(soughtKey, this->root);
 } // Essentially used like an API to interact with the recursive function
+// See lookupRec for complexity
 
 BST::ItemType* BST::lookupRec(KeyType soughtKey, Node* currentNode)
 {
@@ -90,11 +97,17 @@ BST::ItemType* BST::lookupRec(KeyType soughtKey, Node* currentNode)
     }
     return nullptr;
 } // Recursively searches the BST to return the location in memory of the item
+/*
+ * Average is O(log2(n)) (for balanced tree)
+ * Worst case is tree is unbalanced - O(n)
+ * Best case is desired node is root O(1)
+*/
 
 void BST::insert(KeyType newKey, ItemType newItem)
 {
     insertRec(newKey, newItem, this->root);
 } // The wrapper used to insert a new item into a sorted BST
+// See insertRec for complexity
 
 void BST::insertRec(KeyType newKey, ItemType newItem, Node* &currentNode)
 {
@@ -118,6 +131,11 @@ void BST::insertRec(KeyType newKey, ItemType newItem, Node* &currentNode)
         insertRec(newKey, newItem, currentNode->rightChild);
     }
 } // Recursively iterates until it reaches the correct insertion point
+/*
+ * Average is O(log2(n)) (for balanced tree)
+ * Worst case is tree is unbalanced - O(n)
+ * Best case is tree is empty O(1)
+*/
 
 void BST::remove(KeyType soughtKey)
 {
@@ -136,6 +154,10 @@ void BST::remove(KeyType soughtKey)
         }
     }
 } // The wrapper used for removing a node by its key
+/*
+ * Best case root is only entry - O(1)
+ * Average and worse case - see removeRec
+*/
 
 void BST::removeRec(Node * & currentNode, KeyType soughtKey)
 {
@@ -183,6 +205,11 @@ void BST::removeRec(Node * & currentNode, KeyType soughtKey)
         }
     }
 } // The recursive function to remove a desired node from the BST
+/*
+ * Best case the current node has no children - O(1)
+ * Worst case has to visit every node - O(n)
+ * Average case O(log2(n)) (balanced tree)
+*/
 
 BST::Node* BST::detachMinimumNode(Node * & currentNode)
 {
@@ -199,6 +226,11 @@ BST::Node* BST::detachMinimumNode(Node * & currentNode)
         return detachMinimumNode(currentNode->leftChild);
     }
 } // Returns a copy of the minimum node
+/*
+ * Best case only one node - O(1)
+ * Worst case unbalanced tree - O(n)
+ * Average case O(log2(n)) (balanced tree) (lookupRec but always goes left)
+*/
 
 void BST::displayEntries()
 {
@@ -225,6 +257,12 @@ void BST::inOrderTraversal(Node * & currentNode)
         }
     }
 } // Prints the key/item pairs in a sorted list
+/*
+ * Must visit every node with parents being visited up to three times
+ * Best case O(1)
+ * Worst case [O(2n)?]
+ * Averagea case O(n)
+*/
 
 void BST::displayTree()
 {
@@ -267,6 +305,11 @@ void BST::preOrderDisplay(Node * &currentNode, std::string whiteSpace)
         std::cout << whiteSpace << "*" << std::endl;
     }
 } // Prints the tree in its graphical form
+/*
+ * Visits every node only once
+ * Always O(n)
+ * Best case n = 1 so O(1)
+*/
 
 void BST::deepDelete(Node * current)
 {
@@ -278,6 +321,11 @@ void BST::deepDelete(Node * current)
         delete(current);
     }
 }
+/*
+ * Visits every node only once
+ * Always O(n)
+ * Best case n = 1 so O(1)
+*/
 
 BST::Node* BST::deepCopy(Node * originalNode)
 {
@@ -290,6 +338,11 @@ BST::Node* BST::deepCopy(Node * originalNode)
     }
     return originalNode;
 }
+/*
+ * Visits every node only once
+ * Always O(n)
+ * Best case n = 1 so O(1)
+*/
 
 void BST::rotateRight(Node* & localRoot)
 {
