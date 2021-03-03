@@ -23,13 +23,13 @@ BST::~BST()
 }
 // See deepDelete for complexity
 
-BST & BST::operator=(const BST & original)
+BST & BST::operator=(const BST & originalTree)
 {
-    if (this != &original)
+    if (this != &originalTree)
     {
         deepDelete(this->root);
     }
-    this->root = deepCopy(original.root);
+    this->root = deepCopy(originalTree.root);
     return *this;
 }
 // Either deepDelete + deepCopy or just deepCopy
