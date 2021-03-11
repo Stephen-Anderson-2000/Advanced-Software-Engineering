@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += \
         main.cpp \
         maplist.cpp \
+        performancetests.cpp \
         unorderedmaplist.cpp
 
 HEADERS += \
