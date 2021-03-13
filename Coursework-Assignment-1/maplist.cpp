@@ -47,6 +47,17 @@ void MapList::Load_Data()
     inputFile.close();
 }
 
+void MapList::Invert_Data()
+{
+    std::map<std::string, std::string> invertedData;
+
+    for (auto brick : this->unsortedData)
+    {
+        invertedData.insert(std::make_pair(brick.second, brick.first));
+    }
+    this->unsortedData = invertedData;
+}
+
 void MapList::Print_Sorted_Bricks()
 {
     // Found this from a stackoverflow response:
@@ -62,6 +73,9 @@ void MapList::Sort_Bricks()
 {
     // Sorts the bricks going West to East
     Sort_Eastern();
+
+    Invert_Data();
+
     // Sorts the bricks going East to West
     Sort_Western();
 }
@@ -96,9 +110,24 @@ void MapList::Sort_Western()
     // Declared outside of the loop to allow for longer persisted values
     std::pair<std::string, std::string> currentBrick = this->firstBrick;
 
-    this->sortedData.push_front(currentBrick.first);
+    // Keeps looping until the Western most brick is reached
+
+    while (sorting)
+    {
+        currentBrick = Find_Next_Brick(currentBrick.second);
+        // Next brick was not found
+        if (currentBrick.first == "")
+        {
+            sorting = false;
+        }
+        else
+        {
+            this->sortedData.push_front(currentBrick.second);
+        }
+    }
 
     // Keeps looping until the Western most brick is reached
+    /*
     while (sorting)
     {
         currentBrick = Find_Next_Brick_By_Value(currentBrick.first);
@@ -112,6 +141,7 @@ void MapList::Sort_Western()
             this->sortedData.push_front(currentBrick.first);
         }
     }
+    */
 }
 
 std::pair<std::string, std::string> MapList::Find_Next_Brick(std::string key)
