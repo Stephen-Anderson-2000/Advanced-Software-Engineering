@@ -22,7 +22,6 @@ private:
     void Sort_Eastern();
     void Sort_Western();
     std::pair<std::string, std::string> Find_Next_Brick(std::string);
-    std::pair<std::string, std::string> Find_Next_Brick_By_Value(std::string);
 };
 
 #endif // MAPLIST_H

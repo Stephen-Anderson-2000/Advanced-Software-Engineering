@@ -127,22 +127,6 @@ void UnorderedMapList::Sort_Western()
             this->sortedData.push_front(currentBrick.second);
         }
     }
-
-    /*
-    while (sorting)
-    {
-        currentBrick = Find_Next_Brick_By_Value(currentBrick.first);
-        // Next brick not found
-        if (currentBrick.first == "")
-        {
-            sorting = false;
-        }
-        else
-        {
-            this->sortedData.push_front(currentBrick.first);
-        }
-    }
-    */
 }
 
 std::pair<std::string, std::string> UnorderedMapList::Find_Next_Brick(std::string key)
@@ -164,30 +148,5 @@ std::pair<std::string, std::string> UnorderedMapList::Find_Next_Brick(std::strin
     {
         return std::make_pair("", "");
     }
-}
-
-std::pair<std::string, std::string> UnorderedMapList::Find_Next_Brick_By_Value(std::string value)
-{
-    // Creates an iterator starting at the beginning of the structure
-    auto found = unsortedData.begin();
-
-    // Iterates through every remaining element
-    while (found != unsortedData.end())
-    {
-        // Uses the value to find the key of an element
-        if (found->second == value)
-        {
-            // Creates a new pair
-            std::pair<std::string, std::string> nextBrick;
-            nextBrick.first = found->first;
-            nextBrick.second = found->second;
-            // Deletes the old pair from the structure
-            this->unsortedData.erase(found);
-            return nextBrick;
-        }
-        found++;
-    }
-    // Brick wasn't found
-    return std::make_pair("", "");
 }
 
