@@ -1,9 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <fstream>
-#include <future>
 #include <string>
-#include <thread>
 
 #include "maplist.h"
 #include "unorderedmaplist.h"
@@ -11,10 +9,8 @@
 using std::chrono::steady_clock;
 using std::chrono::nanoseconds;
 using std::chrono::duration_cast;
-using std::future;
 using std::ofstream;
 using std::string;
-using std::thread;
 
 const int NUMENTRIES = 10;
 
@@ -70,24 +66,10 @@ void run_Unordered_Map_List_Timing_Tests()
         std::cout << fileName << std::endl;
         resultsFile << fileAdditions[i];
 
-        nanoseconds timingResults[5];
-        thread t1(Time_UnorderedMapList, timingResults, i, fileName);
-        thread t2(Time_UnorderedMapList, timingResults, i, fileName);
-        thread t3(Time_UnorderedMapList, timingResults, i, fileName);
-        thread t4(Time_UnorderedMapList, timingResults, i, fileName);
-        thread t5(Time_UnorderedMapList, timingResults, i, fileName);
-
-        t1.join();
-        t2.join();
-        t3.join();
-        t4.join();
-        t5.join();
-
         for (int j = 0; j < 5; j++)
         {
-            //nanoseconds timeToSort = timingTest_Unordered_Map_List(fileName);
-            //resultsFile << "," << timeToSort.count();
-            resultsFile << "," << timingResults[j].count();
+            nanoseconds timeToSort = timingTest_Unordered_Map_List(fileName);
+            resultsFile << "," << timeToSort.count();
         }
 
         resultsFile << "\n";
