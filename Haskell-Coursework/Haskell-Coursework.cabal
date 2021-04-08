@@ -4,13 +4,13 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 091d4b88248ac4a4fa756d35e62480b59bac6701e41073d91d565aaa05b6f9de
+-- hash: b0bbd0cbca4702c434ed99058ac70c1c71ef6155def3c7d5e5083dbe8f3f927a
 
-name:           Week11
+name:           Haskell-Coursework
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/Week11#readme>
-homepage:       https://github.com/githubuser/Week11#readme
-bug-reports:    https://github.com/githubuser/Week11/issues
+description:    Please see the README on GitHub at <https://github.com/githubuser/Haskell-Coursework#readme>
+homepage:       https://github.com/githubuser/Haskell-Coursework#readme
+bug-reports:    https://github.com/githubuser/Haskell-Coursework/issues
 author:         Author name here
 maintainer:     example@example.com
 copyright:      2021 Author name here
@@ -23,41 +23,41 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/Week11
+  location: https://github.com/githubuser/Haskell-Coursework
 
 library
   exposed-modules:
-      Luhn
+      Lib
   other-modules:
-      Paths_Week11
+      Paths_Haskell_Coursework
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
   default-language: Haskell2010
 
-executable Week11-exe
+executable Haskell-Coursework-exe
   main-is: Main.hs
   other-modules:
-      Paths_Week11
+      Paths_Haskell_Coursework
   hs-source-dirs:
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      Week11
+      Haskell-Coursework
     , base >=4.7 && <5
   default-language: Haskell2010
 
-test-suite Week11-test
+test-suite Haskell-Coursework-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Paths_Week11
+      Paths_Haskell_Coursework
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       HUnit
-    , Week11
+    , Haskell-Coursework
     , base >=4.7 && <5
   default-language: Haskell2010
