@@ -1,9 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <fstream>
-#include <future>
 #include <string>
-#include <thread>
 
 #include "maplist.h"
 #include "unorderedmaplist.h"
@@ -11,16 +9,14 @@
 using std::chrono::steady_clock;
 using std::chrono::nanoseconds;
 using std::chrono::duration_cast;
-using std::future;
 using std::ofstream;
 using std::string;
-using std::thread;
 
-const int NUMENTRIES = 10;
+const int NUMENTRIES = 17;
 
 std::string fileAdditions[NUMENTRIES] = { "20", "50", "100", "200", "500", "1K", "2K",
-                                          "5K", "10K", "20K"/*, "50K", "100K", "200K",
-                                          "500K", "1M", "2M", "3M"*/};
+                                          "5K", "10K", "20K", "50K", "100K", "200K",
+                                          "500K", "1M", "2M", "3M"};
 
 nanoseconds timingTest_Unordered_Map_List(std::string fileName)
 {
@@ -35,12 +31,6 @@ nanoseconds timingTest_Unordered_Map_List(std::string fileName)
    nanoseconds timeTaken = duration_cast<nanoseconds>(finishTime - startTime);
 
    return timeTaken;
-}
-
-void Time_UnorderedMapList(nanoseconds timingResults[5], int threadNum, string fileName)
-{
-    nanoseconds timeToSort = timingTest_Unordered_Map_List(fileName);
-    timingResults[threadNum] = timeToSort;
 }
 
 nanoseconds timingTest_Map_List(std::string fileName)
@@ -60,7 +50,7 @@ nanoseconds timingTest_Map_List(std::string fileName)
 
 void run_Unordered_Map_List_Timing_Tests()
 {
-    ofstream resultsFile("Unordered Map -1 Umap - List Results.csv");
+    ofstream resultsFile("Unordered Map -2 Umaps- List Results.csv");
     resultsFile << "Number of Entries,Time Taken to Sort,,,,,Average\n";
     resultsFile << ",1,2,3,4,5\n";
     for (int i = 0; i < NUMENTRIES; i++)
@@ -70,24 +60,10 @@ void run_Unordered_Map_List_Timing_Tests()
         std::cout << fileName << std::endl;
         resultsFile << fileAdditions[i];
 
-        nanoseconds timingResults[5];
-        thread t1(Time_UnorderedMapList, timingResults, i, fileName);
-        thread t2(Time_UnorderedMapList, timingResults, i, fileName);
-        thread t3(Time_UnorderedMapList, timingResults, i, fileName);
-        thread t4(Time_UnorderedMapList, timingResults, i, fileName);
-        thread t5(Time_UnorderedMapList, timingResults, i, fileName);
-
-        t1.join();
-        t2.join();
-        t3.join();
-        t4.join();
-        t5.join();
-
         for (int j = 0; j < 5; j++)
         {
-            //nanoseconds timeToSort = timingTest_Unordered_Map_List(fileName);
-            //resultsFile << "," << timeToSort.count();
-            resultsFile << "," << timingResults[j].count();
+            nanoseconds timeToSort = timingTest_Unordered_Map_List(fileName);
+            resultsFile << "," << timeToSort.count();
         }
 
         resultsFile << "\n";
@@ -97,8 +73,8 @@ void run_Unordered_Map_List_Timing_Tests()
 
 void run_Map_List_Timing_Tests()
 {
-    ofstream resultsFile("Map List -1 Map - Results.csv");
-    resultsFile << "Number of Entries,Time Taken to Sort,\n";
+    ofstream resultsFile("Map List -2 Maps- Results.csv");
+    resultsFile << "Number of Entries,Time Taken to Sort,,,,,Average\n";
     resultsFile << ",1,2,3,4,5\n";
     for (int i = 0; i < NUMENTRIES; i++)
     {

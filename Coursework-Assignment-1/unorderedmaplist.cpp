@@ -49,6 +49,17 @@ void UnorderedMapList::Load_Data()
     inputFile.close();
 }
 
+void UnorderedMapList::Invert_Data()
+{
+    std::unordered_map<std::string, std::string> invertedData;
+
+    for (auto brick : this->unsortedData)
+    {
+        invertedData.insert(std::make_pair(brick.second, brick.first));
+    }
+    this->unsortedData = invertedData;
+}
+
 void UnorderedMapList::Print_Sorted_Bricks()
 {
     // Found this from a stackoverflow response:
@@ -64,6 +75,9 @@ void UnorderedMapList::Sort_Bricks()
 {
     // Sorts the bricks going West to East
     Sort_Eastern();
+
+    Invert_Data();
+
     // Sorts the bricks going East to West
     Sort_Western();
 }
@@ -98,20 +112,19 @@ void UnorderedMapList::Sort_Western()
     // Declared outside of the loop to allow for longer persisted values
     std::pair<std::string, std::string> currentBrick = this->firstBrick;
 
-    this->sortedData.push_front(currentBrick.first);
-
     // Keeps looping until the Western most brick is reached
+
     while (sorting)
     {
-        currentBrick = Find_Next_Brick_By_Value(currentBrick.first);
-        // Next brick not found
+        currentBrick = Find_Next_Brick(currentBrick.second);
+        // Next brick was not found
         if (currentBrick.first == "")
         {
             sorting = false;
         }
         else
         {
-            this->sortedData.push_front(currentBrick.first);
+            this->sortedData.push_front(currentBrick.second);
         }
     }
 }
@@ -135,30 +148,5 @@ std::pair<std::string, std::string> UnorderedMapList::Find_Next_Brick(std::strin
     {
         return std::make_pair("", "");
     }
-}
-
-std::pair<std::string, std::string> UnorderedMapList::Find_Next_Brick_By_Value(std::string value)
-{
-    // Creates an iterator starting at the beginning of the structure
-    auto found = unsortedData.begin();
-
-    // Iterates through every remaining element
-    while (found != unsortedData.end())
-    {
-        // Uses the value to find the key of an element
-        if (found->second == value)
-        {
-            // Creates a new pair
-            std::pair<std::string, std::string> nextBrick;
-            nextBrick.first = found->first;
-            nextBrick.second = found->second;
-            // Deletes the old pair from the structure
-            this->unsortedData.erase(found);
-            return nextBrick;
-        }
-        found++;
-    }
-    // Brick wasn't found
-    return std::make_pair("", "");
 }
 
