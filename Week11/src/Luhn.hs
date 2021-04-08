@@ -1,5 +1,5 @@
 module Luhn
-    ( luhnChecksum
+    ( luhnDouble, luhnAlgorithm, luhnChecksum, boolToString
     ) where
 
 import Data.Char(digitToInt)
@@ -9,7 +9,7 @@ luhnDouble a =
     let x = a * 2 in
         if x > 9 then x - 9 else x
 
-luhnAlgorithm :: Int -> Int -> Int -> Int -> Bool 
+luhnAlgorithm :: Int -> Int -> Int -> Int -> Bool
 luhnAlgorithm a b c d =
     let  x = a + b + c + d in 
         mod x 10 == 0
