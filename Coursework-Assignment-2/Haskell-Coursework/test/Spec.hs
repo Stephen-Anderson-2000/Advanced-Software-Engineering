@@ -1,11 +1,13 @@
 import Test.HUnit
 -- https://hackage.haskell.org/package/HUnit
 import Lib
+import BST
 
 main :: IO ()
 main = do
     results <- runTestTT myTestSuite
     print results
+    dummyFunc
 
 -- Test case takes the assertion type, the identifier, the expected result then the function and parameter(s)
 test1 :: Test
