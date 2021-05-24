@@ -1,11 +1,9 @@
-module Lib ( 
-        someFunc, 
-        sqr
-    ) where
+module Lib where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
-
-
-sqr :: Int -> Int
-sqr i = i * i
+qsort :: [Int] -> [Int]
+qsort [] = []
+qsort (pivot : restOfList) = 
+    let smallerItems = filter (< pivot) restOfList
+        largerItems = filter (> pivot) restOfList
+    in
+        qsort smallerItems ++ [pivot] ++ qsort largerItems

@@ -1,12 +1,17 @@
-module BST
-    ( 
-        dummyFunc
+module BST (
+    BST,
+    BST.lookup
     ) where
 
--- Tree item can either be a leaf (null end point)
--- or it can be a node that contains an item and pointers to the two child items
-data BinaryTree item = Leaf 
-                    | Node Int item (BinaryTree item) (BinaryTree item)
+data BST item = Leaf
+                | Node Int item (BST item) (BST item)
 
-dummyFunc :: IO ()
-dummyFunc = undefined
+lookup :: Int -> BST item -> Maybe item
+lookup soughtKey Leaf = Nothing
+lookup soughtKey (Node key item leftChild rightChild)
+  | soughtKey < key =
+    BST.lookup soughtKey leftChild
+  | soughtKey > key =
+    BST.lookup soughtKey rightChild
+  | otherwise =
+    Just item

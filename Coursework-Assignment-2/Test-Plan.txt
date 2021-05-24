@@ -1,0 +1,73 @@
+Required functionality:
+	Create an empty dictionary
+	Insert a key/item pair
+	Return an item when given a key
+	Delete an item using a key
+	Print all entries - in order traversal
+	
+	
+Property Testing
+Creating the dictionary
+	Can create an empty dictionary
+	Can create and populate the dictionary with individual random key-item pairs
+		The dictionary is sorted
+	Can create and populate the dictionary using a list of entries
+	Can overwrite existing items with the same key
+	
+Lookup
+	Can't find items not in the dictionary
+	Can find items in a dictionary when given a key
+	Can find every item individually
+	Can print the tree in order
+	Can delete an item when given a key
+		Dictionary maintains order
+	Can delete all items in the dictionary in reverse order
+	Can delete all items in the dictionary in a random order
+
+
+
+
+Unit testing
+
+Worker functions:
+	Insert a list of test data
+	Check if item is present (returned item matches given item)
+	Check if item is not present (returned item should be null/equivalent to not found)
+
+Creating the dictionary:
+	Create an empty data structure without crashing
+	
+Lookup/Inserting:
+	Lookup a random integer key (1? 0?) should return null
+	Can insert an item without crashing
+	Can insert an item and return that item
+	Can insert 5 unique items
+	Can insert 5 unique items and return the first one
+	"										" third one
+	"										" fifth one
+	Can insert an item and overwrite the value of an existing item with a matching key ([5, a] -> [5, b])
+	Can insert 5 items and "																			" of the third
+	Can insert the test data (15/20 items)
+	Can insert the test data and find every item
+	Can insert the test data and not find items that weren't added (doesn't return false positives)
+	
+Deleting:
+	Doesn't crash when removing an item from an empty tree
+	Doesn't accidentally add an item when removing it from an empty tree
+	Can remove a root node that has no children
+	Can remove root's left child (root only has left child)
+	Can remove just the root's left child (has both children, only deletes left one)
+	Can remove root's right child
+	Can remove just the root's right child
+	Can remove root's left and right child
+	Insert test data, remove the end nodes (the ones at the bottom with no children)
+	Insert an item, overwrite that item, then delete it
+	Insert three items, overwrite them, then delete them (a root and two children)
+	Can remove root when it has just a left child
+	Can remove root when it has just a right child
+	Insert the test data, remove nodes with just one child (left or right)
+	Can remove root when it has both children (children are childless)
+	Remove root that has two children, then remove the new child
+	Remove root that has two children, then remove the new root
+	Insert test data, remove the root
+	Insert the test data, remove an item that has two children that each have two children

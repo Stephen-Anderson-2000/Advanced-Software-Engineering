@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import BST
 
 main :: IO ()
-main = someFunc
+main = putStrLn "This is Main.hs"
