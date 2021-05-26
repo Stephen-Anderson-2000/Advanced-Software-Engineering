@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7977da13a2a06669e6e512a50984bce35c9c3a0e4d556326a292efb32f967847
+-- hash: ef71e7cb28c2c1083604464acf50dcb9826c183fa3853e63613c7bd7e1e82058
 
 name:           Haskell-Coursework
 version:        0.1.0.0
@@ -27,7 +27,7 @@ source-repository head
 
 library
   exposed-modules:
-      BST
+      BinaryTree
       Lib
   other-modules:
       Paths_Haskell_Coursework
@@ -55,7 +55,7 @@ test-suite Haskell-Coursework-test
   other-modules:
       Paths_Haskell_Coursework
   hs-source-dirs:
-      test, src
+      test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       Haskell-Coursework

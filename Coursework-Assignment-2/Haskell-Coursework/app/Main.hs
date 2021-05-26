@@ -1,6 +1,6 @@
 module Main where
 
-import BST
+import BinaryTree
 
 main :: IO ()
 main = putStrLn "This is Main.hs"
