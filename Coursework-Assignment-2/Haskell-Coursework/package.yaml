@@ -47,3 +47,4 @@ tests:
     dependencies:
     - Haskell-Coursework
     - QuickCheck
+    - random
