@@ -1,17 +1,9 @@
 import Test.QuickCheck
 import BinaryTree
+import Lib
 import Data.List
 import qualified Data.Maybe
 
-
--- Function taken from Week 20 demonstration
-qsort :: [Int] -> [Int]
-qsort [] = []
-qsort (pivot : restOfList) =
-  let smallerItems = filter (< pivot) restOfList
-      largerItems = filter (>= pivot) restOfList
-   in
-     qsort smallerItems ++ [pivot] ++ qsort largerItems
 
 -- Function taken from https://stackoverflow.com/questions/1735146/ways-to-get-the-middle-of-a-list-in-haskell
 middle :: [a] -> [a]
