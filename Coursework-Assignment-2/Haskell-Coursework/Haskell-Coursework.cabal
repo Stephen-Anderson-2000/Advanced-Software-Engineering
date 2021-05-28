@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8bc890c97c9f7790332aa40b50aeedebc45988ec09e5ef08261cfae3945c58af
+-- hash: 4df7be93c4e9cfccb4f37030da4ef94c4a2d719510d42ac52079b5ed1642c5a4
 
 name:           Haskell-Coursework
 version:        0.1.0.0
@@ -58,7 +58,8 @@ test-suite Haskell-Coursework-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      Haskell-Coursework
+      HUnit
+    , Haskell-Coursework
     , QuickCheck
     , base >=4.7 && <5
     , random

@@ -1,10 +1,8 @@
 module BinaryTree (  
     addItem,
     addList,
-    BST,
     bstToList,
     deleteItem,
-    displayBST,
     lookupKey,
     newBSTFromItem,
     newBSTFromList,

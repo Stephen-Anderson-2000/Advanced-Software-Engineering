@@ -16,7 +16,7 @@ luhnAlgorithm a b c d =
 
 getUserChar :: IO Char
 getUserChar = do
-    getChar       
+    getChar
 
 luhnChecksum :: IO ()
 luhnChecksum = do
