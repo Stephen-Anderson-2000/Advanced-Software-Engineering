@@ -1,21 +1,22 @@
-module BinaryTree (
-    BST,
-    newEmptyBST,
-    testTree,
-    newBSTFromItem,
-    newBSTFromList,
+module BinaryTree (  
     addItem,
     addList,
+    BST,
+    bstToList,
     deleteItem,
+    displayBST,
     lookupKey,
-    bstToList
+    newBSTFromItem,
+    newBSTFromList,
+    newEmptyBST,
+    testTree,  
     ) where
 
 data BST item = Leaf
                 | Node Int item (BST item) (BST item)
                 deriving Show
 
--- Method and structure taken from http://learnyouahaskell.com/zippers
+-- Structure for hard coding taken from http://learnyouahaskell.com/zippers
 -- Values used are from earlier lab work
 testTree :: BST String
 testTree =

@@ -1,7 +1,7 @@
 import Test.QuickCheck
 import BinaryTree
-import Data.List
 import Lib
+import Data.List
 import qualified Data.Maybe
 
 
