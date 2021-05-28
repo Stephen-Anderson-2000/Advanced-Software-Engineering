@@ -46,5 +46,6 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - Haskell-Coursework
+    - HUnit
     - QuickCheck
     - random

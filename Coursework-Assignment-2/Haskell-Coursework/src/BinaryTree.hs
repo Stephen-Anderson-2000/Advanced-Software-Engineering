@@ -8,8 +8,7 @@ module BinaryTree (
     addList,
     deleteItem,
     lookupKey,
-    bstToList,
-    displayBST,
+    bstToList
     ) where
 
 data BST item = Leaf
@@ -73,16 +72,16 @@ addList [] tree = tree
 addList items Leaf =
     addList (tail items) (uncurry addItem (head items) newEmptyBST)
 addList items tree =
-     addList (tail items) (uncurry addItem (head items) tree)
+    addList (tail items) (uncurry addItem (head items) tree)
 
 
 lookupKey :: Int -> BST item -> Maybe item
 lookupKey soughtKey Leaf = Nothing
-lookupKey soughtKey (Node key item leftChild rightChild)
+lookupKey soughtKey node@(Node key item left right)
     | soughtKey < key =
-        lookupKey soughtKey leftChild
+        lookupKey soughtKey left
     | soughtKey > key =
-        lookupKey soughtKey rightChild
+        lookupKey soughtKey right
     | otherwise =
         Just item
 
@@ -116,22 +115,9 @@ minimumNode node@(Node key item Leaf right) = (key, item)
 minimumNode node@(Node _ _ left _) = minimumNode left
 
 
-nodeToString :: Show item => BST item -> String
-nodeToString node@(Node key item left right) =
-    show key ++ ", " ++ show item
-
-
 bstToList :: Eq item => BST item -> [Int] -> [Int]
 bstToList tree@(Node key item left right) list =
     list ++ bstToList left list
     ++ [key]
     ++ bstToList right list
 bstToList Leaf list = list
-
-
-displayBST :: Show item => BST item -> IO ()
-displayBST Leaf = return ()
-displayBST tree@(Node key item left right) = do
-    displayBST left
-    putStrLn (nodeToString tree)
-    displayBST right

@@ -1,24 +1,8 @@
 import Test.QuickCheck
 import BinaryTree
 import Data.List
+import Lib
 import qualified Data.Maybe
-
-
--- Function taken from Week 20 demonstration
-qsort :: [Int] -> [Int]
-qsort [] = []
-qsort (pivot : restOfList) =
-  let smallerItems = filter (< pivot) restOfList
-      largerItems = filter (>= pivot) restOfList
-   in
-     qsort smallerItems ++ [pivot] ++ qsort largerItems
-
--- Function taken from https://stackoverflow.com/questions/1735146/ways-to-get-the-middle-of-a-list-in-haskell
-middle :: [a] -> [a]
-middle xs = take (signum ((l + 1) `mod` 2) + 1) $ drop ((l - 1) `div ` 2) xs
-  where l = length xs
-
-
 
 
 prop_bst_create_empty :: Bool
@@ -95,16 +79,6 @@ prop_bst_lookup_nonexistent_items items list =
         lookupKey (fst (head items)) testTree /= Just (snd (head items)))
 
 
-prop_bst_lookup_all_items :: [(Int, String)] -> Bool
-prop_bst_lookup_all_items items = 
-    False
-
-
-prop_bst_print_in_order :: [(Int, String)] -> Bool
-prop_bst_print_in_order items =
-    False
-
-
 prop_bst_delete_nonexistent_item :: [(Int, String)] -> Bool
 prop_bst_delete_nonexistent_item items =
     null items || (
@@ -124,6 +98,7 @@ prop_bst_delete_head items =
                 lookupKey (fst (head items)) tree /= Just (snd (head items))
             )
 
+
 prop_bst_delete_last :: [(Int, String)] -> Bool
 prop_bst_delete_last items =
     null items || (
@@ -138,11 +113,6 @@ prop_bst_delete_middle items =
         let tree = deleteItem (fst (head (middle items))) (newBSTFromList items) in
             lookupKey (fst (head (middle items))) tree /= Just (snd (head (middle items)))
         )
-
-
-prop_bst_delete_all_individually :: [(Int, String)] -> Bool
-prop_bst_delete_all_individually items =
-    False
 
 
 main :: IO ()
@@ -160,12 +130,8 @@ main = do
     quickCheck prop_bst_insert_overwrites --passes
 
     quickCheck prop_bst_lookup_nonexistent_items --passes
-    --quickCheck prop_bst_lookup_all_items --test not implemented
-
-    --quickCheck prop_bst_print_in_order --test not implemented
 
     quickCheck prop_bst_delete_nonexistent_item --passes
     quickCheck prop_bst_delete_head --passes
     quickCheck prop_bst_delete_last --passes
     quickCheck prop_bst_delete_middle --passes
-    --quickCheck prop_bst_delete_all_individually --test not implemented
